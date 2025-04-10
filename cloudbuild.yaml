@@ -1,0 +1,11 @@
+steps:
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        echo "Retrieving SSH key..."
+        gcloud secrets versions access latest --secret="rishabh-test" > key
+        chmod 400 key
+        ssh -i key -o StrictHostKeyChecking=no test@34.47.208.120 \
+          'cd /home/test   && git pull origin main
